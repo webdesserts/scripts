@@ -31,6 +31,7 @@ const subcommands = {
   },
 
   async dev () {
+    validateProject()
     await spawn(Paths.tsc, [`--project`, `${Paths.tsconfig}`, '--watch'], { stdio: 'inherit' })
   }
 }
