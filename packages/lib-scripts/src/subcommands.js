@@ -1,11 +1,9 @@
 const chalk = require("chalk")
 const childProcess = require("child_process")
-const { existsSync } = require('fs')
 const { promisify } = require("util")
-const { AppError } = require("./errors")
 const { logger } = require("./logger")
 const { indent } = require("./miscellaneous")
-const { Paths } = require("./paths")
+const { getProjectPaths } = require("./paths")
 
 const spawn = promisify(childProcess.spawn)
 
@@ -26,39 +24,13 @@ const subcommands = {
   },
 
   async build () {
-    validateProject()
-    await spawn(Paths.tsc, [], { stdio: 'inherit' })
+    const paths = getProjectPaths()
+    await spawn(paths.tsc, [], { stdio: 'inherit' })
   },
 
   async dev () {
-    validateProject()
-    await spawn(Paths.tsc, [`--project`, `${Paths.tsconfig}`, '--watch'], { stdio: 'inherit' })
-  }
-}
-
-/**
- * Makes sure all required files and folders are present
- */
-function validateProject() {
-  /**
-   * @todo This error currently never gets hit because the it errors first trying to find
-   * typescript in paths This error should probably take priority so lets clean then up
-   * when we get the chance.
-   */
-  if (!existsSync(Paths.package)) {
-    throw new AppError(`Unable to find package.json`, [
-      `It looks like you're trying to run lib-scripts in an uninitialized project.`,
-      "Please make sure you're in the correct directory and run `npm init` first."
-    ])
-  }
-
-  if (!existsSync(Paths.tsconfig)) {
-    throw new AppError(`Unable to find tsconfig.json`, [
-      `lib-scripts requires a tsconfig.json to properly build.`,
-      `Please add the a tsconfig.json with the following cotents:`,
-      ``,
-      `{ "extends": "./node_modules/@webdesserts/lib-scripts/lib.tsconfig.json" }`,
-    ])
+    const paths = getProjectPaths()
+    await spawn(paths.tsc, [`--project`, `${paths.tsconfig}`, '--watch'], { stdio: 'inherit' })
   }
 }
 

@@ -46,7 +46,6 @@ const logger = {
       const error = messages[0]
       console.error(`${label}`, error.message)
       if (error.details) {
-        this.info('')
         this.info(chalk.dim(error.details.split(EOL).map(indent).join(EOL)));
         this.info('')
       }
