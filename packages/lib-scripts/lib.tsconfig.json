@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "noEmitOnError": true,
+    "outDir": "dist",
+    "sourceMap": true,
+    "module": "CommonJS",
+    "target": "es6",
+    "lib": [ "es2017" ],
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "allowJs": true,
+    "checkJs": true
+  },
+  "include": [
+    "../../../src"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "name": "@webdesserts/lib-scripts",
+  "version": "0.1.0",
+  "description": "A set of scripts I use when building new libraries",
+  "author": "Michael Mullins",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10"
+  },
+  "bin": {
+    "lib-scripts": "bin/lib-scripts.js"
+  },
+  "files": [
+    "src",
+    "lib.tsconfig.json"
+  ],
+  "scripts": {
+    "build": "./bin/lib-scripts.js build",
+    "dev": "./bin/lib-scripts.js dev"
+  },
+  "dependencies": {
+    "chalk": "^4",
+    "filesize": "^6.3.0",
+    "minimist": "^1.2.0"
+  },
+  "peerDependencies": {
+    "typescript": "^3.5.3"
+  },
+  "devDependencies": {
+    "@types/chalk": "^2.2.0",
+    "@types/minimist": "^1.2.1",
+    "@types/node": "^15.12.2",
+    "typescript": "^4.3.2"
+  }
+}
