@@ -1,6 +1,6 @@
 {
   "name": "@webdesserts/lib-scripts",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A set of scripts I use when building new libraries",
   "author": "Michael Mullins",
   "license": "MIT",
