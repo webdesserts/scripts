@@ -24,7 +24,7 @@
     "minimist": "^1.2.0"
   },
   "peerDependencies": {
-    "typescript": "^3.5.3"
+    "typescript": ">=3.5.3"
   },
   "devDependencies": {
     "@types/chalk": "^2.2.0",
