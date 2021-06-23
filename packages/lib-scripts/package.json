@@ -11,6 +11,7 @@
     "lib-scripts": "bin/lib-scripts.js"
   },
   "files": [
+    "bin",
     "src",
     "lib.tsconfig.json"
   ],
