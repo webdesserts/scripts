@@ -1,0 +1,10 @@
+{
+  "name": "@webdesserts/scripts",
+  "description": "A collection of cli scripts used to manage js projects",
+  "private": true,
+  "author": "Michael C Mullins",
+  "license": "MIT",
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  }
+}
