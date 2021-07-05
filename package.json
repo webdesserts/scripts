@@ -4,6 +4,11 @@
   "private": true,
   "author": "Michael C Mullins",
   "license": "MIT",
+  "workspaces": [ "packages/*" ],
+  "scripts": {
+    "build": "lerna run build",
+    "dev": "lerna run --parallel dev"
+  },
   "devDependencies": {
     "lerna": "^4.0.0"
   }

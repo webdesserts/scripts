@@ -1,8 +1,10 @@
 {
   "extends": "@webdesserts/lib-scripts/lib.tsconfig.json",
   "compilerOptions": {
-    "noEmit": true,
-    "lib": ["DOM", "ES2017"],
+    "outDir": "dist",
+    "rootDir": "src",
+    "emitDeclarationOnly": true,
+    "composite": true
   },
   "include": ["src"]
 }

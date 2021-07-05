@@ -16,13 +16,15 @@
     "lib.tsconfig.json"
   ],
   "scripts": {
-    "build": "./bin/lib-scripts.js build",
-    "dev": "./bin/lib-scripts.js dev"
+    "build": "lib-scripts build",
+    "dev": "lib-scripts dev",
+    "prepare": "lib-scripts build"
   },
   "dependencies": {
     "chalk": "^4",
     "filesize": "^6.3.0",
-    "minimist": "^1.2.0"
+    "minimist": "^1.2.0",
+    "@webdesserts/script-utils": "./packages/script-utils"
   },
   "peerDependencies": {
     "typescript": ">=3.5.3"

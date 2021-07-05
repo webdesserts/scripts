@@ -16,6 +16,11 @@
   "engines": {
     "node": ">=10"
   },
+  "scripts": {
+    "build": "lib-scripts build",
+    "dev": "lib-scripts dev",
+    "prepare": "lib-scripts build"
+  },
   "dependencies": {
     "@babel/core": "^7.5.4",
     "@babel/plugin-transform-runtime": "^7.14.5",
@@ -39,7 +44,8 @@
     "strip-ansi": "^6",
     "text-table": "^0.2.0",
     "webpack": "^4.4.1",
-    "webpack-dev-middleware": "^3"
+    "webpack-dev-middleware": "^3",
+    "@webdesserts/script-utils": "./packages/script-utils"
   },
   "peerDependencies": {
     "@types/jest": "^26.0.23",

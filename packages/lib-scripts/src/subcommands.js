@@ -1,8 +1,7 @@
 const chalk = require("chalk")
 const childProcess = require("child_process")
 const { promisify } = require("util")
-const { logger } = require("./logger")
-const { indent } = require("./miscellaneous")
+const { logger, indent } = require("@webdesserts/script-utils")
 const { getProjectPaths } = require("./paths")
 
 const spawn = promisify(childProcess.spawn)

@@ -1,15 +1,9 @@
 const chalk = require("chalk")
 const webpack = require("webpack")
-const { logger } = require("./utils/logger")
-const { indent } = require("./utils/miscellaneous")
+const { logger, indent } = require('@webdesserts/script-utils')
 const getConfig = require('./config/webpack.config')
-const child_process = require('child_process')
-const { promisify } = require('util')
-const { getProjectPaths, getScriptsPaths } = require("./paths")
-const { ScriptError } = require("./utils/errors")
+const { getScriptsPaths } = require("./paths")
 const jest = require('jest')
-
-const spawn = promisify(child_process.spawn)
 
 /**
  * @typedef {import("./env").Env} Env
