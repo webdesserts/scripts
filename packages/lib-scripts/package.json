@@ -1,6 +1,6 @@
 {
   "name": "@webdesserts/lib-scripts",
-  "version": "0.1.2",
+  "version": "0.8.0",
   "description": "A set of scripts I use when building new libraries",
   "author": "Michael Mullins",
   "license": "MIT",
@@ -21,10 +21,10 @@
     "prepare": "lib-scripts build"
   },
   "dependencies": {
+    "@webdesserts/script-utils": "^0.8",
     "chalk": "^4",
     "filesize": "^6.3.0",
-    "minimist": "^1.2.0",
-    "@webdesserts/script-utils": "^0.8"
+    "minimist": "^1.2.0"
   },
   "peerDependencies": {
     "typescript": ">=3.5.3"

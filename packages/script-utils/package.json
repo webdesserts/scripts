@@ -1,8 +1,11 @@
 {
   "name": "@webdesserts/script-utils",
   "license": "MIT",
-  "version": "0.1.0",
-  "files": ["dist", "src"],
+  "version": "0.8.0",
+  "files": [
+    "dist",
+    "src"
+  ],
   "main": "src/index.js",
   "types": "dist",
   "scripts": {
