@@ -24,7 +24,7 @@
     "chalk": "^4",
     "filesize": "^6.3.0",
     "minimist": "^1.2.0",
-    "@webdesserts/script-utils": "./packages/script-utils"
+    "@webdesserts/script-utils": "^0.8"
   },
   "peerDependencies": {
     "typescript": ">=3.5.3"

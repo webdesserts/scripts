@@ -13,6 +13,6 @@
     "chalk": "^4.1.1"
   },
   "devDependencies": {
-    "@webdesserts/lib-scripts": "^0.1.2"
+    "@webdesserts/lib-scripts": "^0.8"
   }
 }

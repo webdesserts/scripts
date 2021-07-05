@@ -45,7 +45,7 @@
     "text-table": "^0.2.0",
     "webpack": "^4.4.1",
     "webpack-dev-middleware": "^3",
-    "@webdesserts/script-utils": "./packages/script-utils"
+    "@webdesserts/script-utils": "^0.8"
   },
   "peerDependencies": {
     "@types/jest": "^26.0.23",
