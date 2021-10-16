@@ -30,6 +30,7 @@ module.exports = () => {
     stats: "none",
     mode: env.mode,
     devtool: "sourcemaps",
+    node: false,
     output: {
       path: projectPaths.assets,
       publicPath: routes.assets,
@@ -68,10 +69,16 @@ module.exports = () => {
     module: {
       rules: [
         {
-          test: /\.(t|j)sx?$/,
+          test: /\.(ts|js|md)x?$/,
           exclude: /node_modules/,
           loader: require.resolve("babel-loader"),
-          options: babel_loader_options
+          options: babel_loader_options,
+          rules: [
+            {
+              test: /\.mdx?$/,
+              loader: require.resolve('@mdx-js/loader')
+            }
+          ]
         },
         {
           test: /\.svg$/,
