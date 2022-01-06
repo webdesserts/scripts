@@ -1,5 +1,4 @@
 const ForkTsCheckerWebpackPlugin = require("react-dev-utils/ForkTsCheckerWebpackPlugin");
-const formatter = require("react-dev-utils/typescriptFormatter");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const os = require('os')
 const PrettyWebpack = require("./pretty-webpack-plugin");
@@ -29,20 +28,23 @@ module.exports = () => {
     context: projectPaths.root,
     stats: "none",
     mode: env.mode,
-    devtool: "sourcemaps",
+    devtool: "source-map",
     node: false,
+    optimization: {
+      chunkIds: "named",
+    },
     output: {
       path: projectPaths.assets,
       publicPath: routes.assets,
-      filename: "[name].js"
+      filename: "[name].js",
+      chunkFilename: "[name].[chunkhash:8].bundle.js",
     },
     plugins: [
       new ForkTsCheckerWebpackPlugin({
         async: false,
-        useTypescriptIncrementalApi: true,
-        silent: true,
-        typescript: projectPaths.typescript,
-        formatter
+        typescript: {
+          typescriptPath: projectPaths.typescript
+        },
       }),
       new PrettyWebpack(),
       new CleanWebpackPlugin()
@@ -55,7 +57,7 @@ module.exports = () => {
       host: "0.0.0.0",
       public: os.hostname(),
       port: env.port,
-      before: (app) => {
+      setupMiddlewares: (middelwares, app) => {
         const history = require('connect-history-api-fallback')
         const express = require('express')
         app.use(history())

@@ -55,8 +55,13 @@ const subcommands = {
 
     const app = express();
 
-    if (serverConfig.before) serverConfig.before(app)
-    app.use(middleware(compiler, serverConfig));
+    if (serverConfig.setupMiddlewares) serverConfig.setupMiddlewares(null, app)
+    const middlewareConfig = {
+      writeToDisk: serverConfig.writeToDisk,
+      publicPath: serverConfig.publicPath,
+      stats: serverConfig.stats
+    }
+    app.use(middleware(compiler, middlewareConfig));
 
     const devServer = app.listen(port);
 
