@@ -28,7 +28,9 @@ async function run() {
   try {
     await fn(env)
   } catch(err) {
-    logger.error(err)
+    if (err instanceof Error) {
+      logger.error(err)
+    }
     process.exit(1)
   }
 }

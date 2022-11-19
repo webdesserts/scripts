@@ -1,92 +1,123 @@
 const ForkTsCheckerWebpackPlugin = require("react-dev-utils/ForkTsCheckerWebpackPlugin");
-const formatter = require("react-dev-utils/typescriptFormatter");
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const os = require('os')
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const os = require("os");
 const PrettyWebpack = require("./pretty-webpack-plugin");
-const { getEnv } = require('../env')
-const { getProjectPaths, getScriptsPaths } = require('../paths')
+const { getEnv } = require("../env");
+const { getProjectPaths, getScriptsPaths } = require("../paths");
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
 /**
  * @typedef {import('webpack').Configuration} WebpackConfiguration
- * 
+ *
  * @type {() => WebpackConfiguration & { devServer: any }}
  */
 module.exports = () => {
-  const projectPaths = getProjectPaths()
-  const scriptsPaths = getScriptsPaths()
-  const env = getEnv()
+  const projectPaths = getProjectPaths();
+  const scriptsPaths = getScriptsPaths();
+  const env = getEnv();
 
   const routes = {
-    assets: '/assets/'
-  }
+    assets: "/assets/",
+  };
 
-  const babel_loader_options = {
-    configFile: scriptsPaths.babelConfig
-  }
+  let swrc = require(scriptsPaths.swcConfig);
 
+  let swcOptions = {
+    ...swrc,
+    jsc: {
+      ...swrc.jsc,
+      transform: {
+        react: {
+          refresh: env.isDev,
+        },
+      },
+    },
+  };
+
+  /** @type any[] */
+  let plugins = [new PrettyWebpack(), new CleanWebpackPlugin()];
+
+  if (env.isDev) {
+    plugins.push(
+      new ForkTsCheckerWebpackPlugin({
+        async: true,
+        typescript: {
+          typescriptPath: projectPaths.typescript,
+        },
+      }),
+      new ReactRefreshWebpackPlugin()
+    );
+  }
 
   return {
     context: projectPaths.root,
     stats: "none",
+    infrastructureLogging: {
+      level: "error",
+    },
     mode: env.mode,
-    devtool: "sourcemaps",
+    devtool: "source-map",
+    node: false,
+    optimization: {
+      chunkIds: "named",
+    },
     output: {
       path: projectPaths.assets,
       publicPath: routes.assets,
-      filename: "[name].js"
+      filename: "[name].js",
+      chunkFilename: "[name].[chunkhash:8].bundle.js",
     },
-    plugins: [
-      new ForkTsCheckerWebpackPlugin({
-        async: false,
-        useTypescriptIncrementalApi: true,
-        silent: true,
-        typescript: projectPaths.typescript,
-        formatter
-      }),
-      new PrettyWebpack(),
-      new CleanWebpackPlugin()
-    ],
+    plugins,
     devServer: {
-      contentBase: false,
-      publicPath: routes.assets,
-      stats: false,
-      writeToDisk: env.isProd,
-      host: "0.0.0.0",
-      public: os.hostname(),
+      hot: true,
+      open: true,
+      host: os.hostname(),
       port: env.port,
-      before: (app) => {
-        const history = require('connect-history-api-fallback')
-        const express = require('express')
-        app.use(history())
-        app.use('/', express.static(projectPaths.webRoot))
-      }
+      client: {
+        overlay: {
+          errors: true,
+          warnings: false,
+        },
+      },
+      devMiddleware: {
+        index: true,
+        publicPath: routes.assets,
+        writeToDisk: env.isProd,
+      },
+      static: {
+        directory: projectPaths.webRoot,
+      },
+      historyApiFallback: true,
     },
     resolve: {
       symlinks: false,
-      extensions: [".ts", ".tsx", ".js", ".jsx", ".json"]
+      extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
     },
     module: {
       rules: [
         {
-          test: /\.(t|j)sx?$/,
+          test: /\.(ts|js|md)x?$/,
           exclude: /node_modules/,
-          loader: require.resolve("babel-loader"),
-          options: babel_loader_options
+          loader: require.resolve("swc-loader"),
+          options: swcOptions,
+          rules: [
+            {
+              test: /\.mdx?$/,
+              loader: require.resolve("@mdx-js/loader"),
+            },
+          ],
         },
         {
           test: /\.svg$/,
+          issuer: /\.(ts|js|md)x?$/,
           use: [
             {
-              loader: require.resolve("babel-loader"),
-              options: babel_loader_options
-            },
-            {
               loader: require.resolve("@svgr/webpack"),
-              options: { babel: false, svgo: false }
-            }
-          ]
-        }
-      ]
-    }
-  }
-}
+              options: { svgo: false },
+            },
+          ],
+        },
+      ],
+    },
+  };
+};

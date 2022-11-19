@@ -71,7 +71,7 @@ function getProjectPaths() {
  */
 function getScriptsPaths() {
   return {
-    babelConfig: require.resolve('./config/babel.config.js'),
+    swcConfig: require.resolve('./config/swcrc'),
     jestConfig: require.resolve('./config/jest.config.js'),
     svgrMock: require.resolve('./mocks/svgrMock.js'),
   }

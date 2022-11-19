@@ -9,7 +9,7 @@ const scriptsPaths = getScriptsPaths()
  */
 module.exports = {
   "transform": {
-    '\\.(js|ts)x?$': [ 'babel-jest', { configFile: scriptsPaths.babelConfig} ]
+    '\\.(js|ts)x?$': [ require.resolve('@swc/jest'), { ...require(scriptsPaths.swcConfig) } ]
   },
 
   moduleNameMapper: {
