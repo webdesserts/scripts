@@ -39,8 +39,7 @@ const subcommands = {
   async dev () {
     const config = getConfig()
     const compiler = webpack(config)
-    const express = require('express');
-    const middleware = require('webpack-dev-middleware')
+    const DevServer = require('webpack-dev-server')
     const { devServer: serverConfig } = config
     const hostname = serverConfig.public || serverConfig.host
     const port = serverConfig.port
@@ -53,17 +52,9 @@ const subcommands = {
       }
     })
 
-    const app = express();
+    const devServer = new DevServer(serverConfig, compiler);
 
-    if (serverConfig.setupMiddlewares) serverConfig.setupMiddlewares(null, app)
-    const middlewareConfig = {
-      writeToDisk: serverConfig.writeToDisk,
-      publicPath: serverConfig.publicPath,
-      stats: serverConfig.stats
-    }
-    app.use(middleware(compiler, middlewareConfig));
-
-    const devServer = app.listen(port);
+    await devServer.start();
 
     ['SIGINT', 'SIGTERM'].forEach((sig) => {
       process.on(sig, () => {
